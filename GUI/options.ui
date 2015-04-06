@@ -50,7 +50,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="Core">
       <property name="sizePolicy">
@@ -117,6 +117,16 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Path to your livestreamer.exe</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="LiveStreamerDownload">
+            <property name="text">
+             <string>Download</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -173,6 +183,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Path to your prefered player.exe</string>
             </property>
            </widget>
           </item>
@@ -275,6 +288,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>How many channels to fetch per page</string>
+            </property>
             <property name="minimum">
              <number>5</number>
             </property>
@@ -288,10 +304,10 @@
              <number>10</number>
             </property>
             <property name="value">
-             <number>5</number>
+             <number>50</number>
             </property>
             <property name="sliderPosition">
-             <number>5</number>
+             <number>50</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -506,7 +522,6 @@
   <tabstop>LiveStreamerButton</tabstop>
   <tabstop>PlayerText</tabstop>
   <tabstop>PlayerButton</tabstop>
-  <tabstop>ResultsSlider</tabstop>
   <tabstop>Maximised</tabstop>
   <tabstop>ResetOnStart</tabstop>
   <tabstop>OAuthText</tabstop>

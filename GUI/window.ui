@@ -74,6 +74,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>Type the URL of a stream and press Watch</string>
+         </property>
          <property name="text">
           <string/>
          </property>

@@ -29,6 +29,8 @@ void on_OAuthButton_clicked();
 
 void on_ResultsSlider_valueChanged(int value);
 
+void on_LiveStreamerDownload_clicked();
+
 private:
 Ui::Options *ui;
 QSettings* Settings;

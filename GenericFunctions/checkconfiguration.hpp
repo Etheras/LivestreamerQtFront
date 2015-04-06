@@ -5,17 +5,17 @@
 #include <QMessageBox>
 bool CheckConfiguration(QSettings *Settings)
 {
-    bool toReturn = false;
+	bool toReturn = false;
 
-    if(Settings->value("LiveStreamer").toString() != "" && Settings->value("Player").toString() != "" && Settings->value("OAuth").toString() != "")
-        toReturn = true;
-    else
-    {
-        QMessageBox Warning;
-        Warning.setText("Please Provide OAuth from Settings->Twitch.");
-        Warning.exec();
-    }
-    return toReturn;
+	if(Settings->value("LiveStreamer").toString() != "" && Settings->value("Player").toString() != "" && Settings->value("OAuth").toString() != "")
+		toReturn = true;
+	else
+	{
+		QMessageBox Warning;
+		Warning.setText("You need to configure settings from the options dialog");
+		Warning.exec();
+	}
+	return toReturn;
 }
 
 #endif
