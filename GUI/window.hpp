@@ -7,6 +7,7 @@
 #include <QSignalMapper>
 #include <QSettings>
 #include <QDebug>
+#include <QShortcut>
 
 namespace Ui {
 class Window;

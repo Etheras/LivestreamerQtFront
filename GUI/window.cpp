@@ -28,8 +28,10 @@ Window::Window(QWidget *parent) : QMainWindow(parent), ui(new Ui::Window)
 	else
 		this->show();
 	CheckConfiguration(Settings);
-	if (Settings->value("ResetOnStart").toBool())
+	if (Settings->value("Reset_on_Start").toBool())
 		ui->actionReset->trigger();
+	QShortcut *ResetShortcut = new QShortcut(QKeySequence(tr("F5")), this);
+	connect(ResetShortcut, SIGNAL(activated()), this, SLOT(on_actionReset_triggered()));
 }
 
 Window::~Window()
@@ -53,14 +55,14 @@ void Window::on_actionReset_triggered()
 
 void Window::on_CustomURLButton_clicked()
 {
-	runLivestreamer(Settings->value("LiveStreamer").toString(), Settings->value("Player").toString(), Settings->value("OAuth").toString(), ui->CustomURLText->text(), Quality->checkedAction()->text());
+	runLivestreamer(ui->CustomURLDropDown->currentText() + ui->CustomURLText->text(), Settings->value("LiveStreamer_Path").toString(), Settings->value("Player_Path").toString(), Settings->value("Player_Arguments").toString(), Settings->value("OAuth").toString(), Quality->checkedAction()->text());
 }
 
 void Window::startStream(QPoint point, Qt::MouseButton button, QString Title, QString URL, QString Name, QString Game, int Viewers)
 {
 	if(button == Qt::LeftButton)
 	{
-		runLivestreamer(Settings->value("LiveStreamer").toString(), Settings->value("Player").toString(), Settings->value("OAuth").toString(), URL, Quality->checkedAction()->text());
+		runLivestreamer(URL, Settings->value("LiveStreamer_Path").toString(), Settings->value("Player_Path").toString(), Settings->value("Player_Arguments").toString(), Settings->value("OAuth").toString(), Quality->checkedAction()->text());
 	}
 	else if(button == Qt::RightButton)
 	{

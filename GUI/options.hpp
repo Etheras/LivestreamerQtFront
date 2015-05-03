@@ -21,8 +21,6 @@ explicit Options(QWidget *parent, QSettings *SettingS, NetworkManager *ManageR);
 private slots:
 void on_OkCancel_accepted();
 
-void on_PlayerButton_clicked();
-
 void on_LiveStreamerButton_clicked();
 
 void on_OAuthButton_clicked();
@@ -30,6 +28,8 @@ void on_OAuthButton_clicked();
 void on_ResultsSlider_valueChanged(int value);
 
 void on_LiveStreamerDownload_clicked();
+
+void on_PlayerPathButton_clicked();
 
 private:
 Ui::Options *ui;

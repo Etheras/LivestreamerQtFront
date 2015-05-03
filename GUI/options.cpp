@@ -13,11 +13,12 @@ Options::Options(QWidget *parent, QSettings *SettingS, NetworkManager *ManageR) 
 	Manager = ManageR;
 	Settings = SettingS;
 	ui->ResultsSlider->setValue(Settings->value("Results").toInt());
-	ui->PlayerText->setText(Settings->value("Player").toString());
-	ui->LiveStreamerText->setText(Settings->value("LiveStreamer").toString());
+	ui->PlayerPathText->setText(Settings->value("Player_Path").toString());
+	ui->LiveStreamerText->setText(Settings->value("LiveStreamer_Path").toString());
 	ui->OAuthText->setText(Settings->value("OAuth").toString());
 	ui->Maximised->setChecked(Settings->value("Maximised").toBool());
-	ui->ResetOnStart->setChecked(Settings->value("ResetOnStart").toBool());
+	ui->ResetOnStart->setChecked(Settings->value("Reset_on_Start").toBool());
+	ui->PlayerArgumentsText->setText(Settings->value("Player_Arguments").toString());
 }
 
 Options::~Options()
@@ -28,11 +29,12 @@ Options::~Options()
 void Options::on_OkCancel_accepted()
 {
 	Settings->setValue("Results", ui->ResultsSlider->value());
-	Settings->setValue("Player", ui->PlayerText->text());
-	Settings->setValue("LiveStreamer", ui->LiveStreamerText->text());
+	Settings->setValue("Player_Path", ui->PlayerPathText->text());
+	Settings->setValue("LiveStreamer_Path", ui->LiveStreamerText->text());
 	Settings->setValue("OAuth", ui->OAuthText->text());
 	Settings->setValue("Maximised", ui->Maximised->isChecked());
-	Settings->setValue("ResetOnStart", ui->ResetOnStart->isChecked());
+	Settings->setValue("Reset_on_Start", ui->ResetOnStart->isChecked());
+	Settings->setValue("Player_Arguments", ui->PlayerArgumentsText->text());
 	Settings->sync();
 	QFile file("404_preview.jpg");
 	if (!file.exists())
@@ -44,11 +46,6 @@ void Options::on_OkCancel_accepted()
 		}
 	}
 
-}
-
-void Options::on_PlayerButton_clicked()
-{
-	ui->PlayerText->setText(QFileDialog::getOpenFileName(this));
 }
 
 void Options::on_LiveStreamerButton_clicked()
@@ -69,4 +66,9 @@ void Options::on_ResultsSlider_valueChanged(int value)
 void Options::on_LiveStreamerDownload_clicked()
 {
 	QDesktopServices::openUrl(LivestreamerDownloadURL);
+}
+
+void Options::on_PlayerPathButton_clicked()
+{
+	ui->PlayerPathText->setText(QFileDialog::getOpenFileName(this));
 }

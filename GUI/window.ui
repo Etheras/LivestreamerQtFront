@@ -67,6 +67,36 @@
         <number>0</number>
        </property>
        <item>
+        <widget class="QComboBox" name="CustomURLDropDown">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <item>
+          <property name="text">
+           <string>https://www.twitch.tv/</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>https://www.youtube.com/</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>https://www.hitbox.tv/</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
         <widget class="QLineEdit" name="CustomURLText">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">

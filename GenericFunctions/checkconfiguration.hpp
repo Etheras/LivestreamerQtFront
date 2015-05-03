@@ -7,7 +7,7 @@ bool CheckConfiguration(QSettings *Settings)
 {
 	bool toReturn = false;
 
-	if(Settings->value("LiveStreamer").toString() != "" && Settings->value("Player").toString() != "" && Settings->value("OAuth").toString() != "")
+	if(Settings->value("LiveStreamer_Path").toString() != "" && Settings->value("Player_Path").toString() != "" && Settings->value("OAuth").toString() != "")
 		toReturn = true;
 	else
 	{

@@ -92,7 +92,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="LiveStreamer" native="true">
+        <widget class="QWidget" name="LiveStreamerPath" native="true">
          <layout class="QHBoxLayout" name="LiveStreamerLayout">
           <property name="spacing">
            <number>0</number>
@@ -159,7 +159,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="Player" native="true">
+        <widget class="QWidget" name="PlayerPath" native="true">
          <layout class="QHBoxLayout" name="PlayerLayout">
           <property name="spacing">
            <number>0</number>
@@ -177,7 +177,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QLineEdit" name="PlayerText">
+           <widget class="QLineEdit" name="PlayerPathText">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -190,7 +190,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="PlayerButton">
+           <widget class="QPushButton" name="PlayerPathButton">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -204,6 +204,23 @@
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="PlayerArgumentsLabel">
+         <property name="text">
+          <string>Media Player Arguments :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="PlayerArguments">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="PlayerArgumentsText"/>
+         </item>
+        </layout>
        </item>
        <item>
         <spacer name="Compress_2">
@@ -520,8 +537,7 @@
   <tabstop>ChannelSelector</tabstop>
   <tabstop>LiveStreamerText</tabstop>
   <tabstop>LiveStreamerButton</tabstop>
-  <tabstop>PlayerText</tabstop>
-  <tabstop>PlayerButton</tabstop>
+  <tabstop>PlayerPathButton</tabstop>
   <tabstop>Maximised</tabstop>
   <tabstop>ResetOnStart</tabstop>
   <tabstop>OAuthText</tabstop>

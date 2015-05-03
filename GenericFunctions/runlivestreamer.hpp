@@ -3,13 +3,12 @@
 
 #include <QProcess>
 class QString;
-void runLivestreamer(QString LiveStreamerPath, QString PlayerPath, QString OAuth, QString url, QString Quality = "best")
+void runLivestreamer(QString URL, QString LiveStreamerPath, QString PlayerPath, QString PlayerArguments = "", QString OAuth = "", QString Quality = "best")
 {
-    QProcess* LiveStreamerProcess = new QProcess();
-    QStringList Arguments;
-    Arguments << "-p=" + PlayerPath << "--twitch-oauth-token=" + OAuth  << url << Quality;
-    LiveStreamerProcess->setStandardOutputFile("LiveStreamer.log", QIODevice::Truncate);
-    LiveStreamerProcess->start(LiveStreamerPath, Arguments, QIODevice::ReadOnly);
+	QProcess* LiveStreamerProcess = new QProcess();
+	QStringList Arguments;
+	Arguments << "-p=" + PlayerPath + " " + PlayerArguments << URL << Quality << "--twitch-oauth-token=" + OAuth;
+	LiveStreamerProcess->setStandardOutputFile("LiveStreamer.log", QIODevice::Truncate);
+	LiveStreamerProcess->start(LiveStreamerPath, Arguments, QIODevice::ReadOnly);
 }
 #endif
-
