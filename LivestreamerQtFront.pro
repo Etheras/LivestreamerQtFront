@@ -8,6 +8,9 @@ QT += widgets network
 CONFIG += release
 CONFIG -= debug
 
+RC_ICONS += appicon.ico
+ICON += appicon.icns
+
 TARGET  = LivestreamerQtFront
 TEMPLATE = app
 
@@ -41,3 +44,9 @@ FORMS   += \
 	GUI/window.ui \
 	GUI/options.ui \
 	GUI/about.ui
+
+RESOURCES +=
+
+DISTFILES += \
+    appicon.ico \
+    appresource.rc

@@ -19,6 +19,10 @@ void FileMessageOutput(QtMsgType type, const QMessageLogContext &context, const 
 
 		switch (type)
 		{
+        case QtInfoMsg:
+            ErrorsStream << QTime::currentTime().toString() << " Info: " << localMsg.constData() << " (" << context.file << ":" << context.line << ", " << context.function << ")\n";
+            break;
+
 		case QtDebugMsg:
 			ErrorsStream << QTime::currentTime().toString() << " Debug: " << localMsg.constData() << " (" << context.file << ":" << context.line << ", " << context.function << ")\n";
 			break;
