@@ -5,7 +5,8 @@
 #include "GenericFunctions/genericfunctions.hpp"
 
 #include "Classes/networkmanager.hpp"
-#include "Classes/signalingaction.hpp"
+#include "Classes/OpenChatAction.hpp"
+#include "Classes/OpenStreamAction.hpp"
 
 #include "options.hpp"
 #include "about.hpp"
@@ -21,8 +22,7 @@ Window::Window(QWidget *parent) : QMainWindow(parent), ui(new Ui::Window)
 	ui->Progress->hide();
 	Settings = new QSettings(ApplicationName + ".ini", QSettings::IniFormat, this);
 	ui->Progress->setRange(1, Settings->value("Results").toInt());
-	Manager = new NetworkManager(this);
-	Quality = initQuality(ui->menuQuality->actions(), this);
+    Manager = new NetworkManager(this);
 	if (Settings->value("Maximised").toBool())
 		this->showMaximized();
 	else
@@ -49,20 +49,58 @@ void Window::on_actionExit_triggered()
 
 void Window::on_actionReset_triggered()
 {
-	clear(ui->TwitchLayout);
 	populate(Settings->value("OAuth").toString(), ui->TwitchLayout, Manager, ui->Progress, ui->Navigation, Settings->value("Results").toInt(), this);
 }
 
 void Window::on_CustomURLButton_clicked()
 {
-	runLivestreamer(ui->CustomURLDropDown->currentText() + ui->CustomURLText->text(), Settings->value("LiveStreamer_Path").toString(), Settings->value("Player_Path").toString(), Settings->value("Player_Arguments").toString(), Settings->value("OAuth").toString(), Quality->checkedAction()->text());
+    runLivestreamer(ui->CustomURLDropDown->currentText() + ui->CustomURLText->text(), Settings->value("LiveStreamer_Path").toString(), Settings->value("Player_Path").toString(), Settings->value("Player_Arguments").toString(), Settings->value("OAuth").toString(), "Best");
 }
 
-void Window::startStream(QPoint point, Qt::MouseButton button, QString Title, QString URL, QString Name, QString Game, int Viewers)
+void Window::startStream(QPoint point, Qt::MouseButton button, QString Title, QString URL, QString Name, QString Game, int Viewers, QString TrueQuality)
 {
 	if(button == Qt::LeftButton)
 	{
-		runLivestreamer(URL, Settings->value("LiveStreamer_Path").toString(), Settings->value("Player_Path").toString(), Settings->value("Player_Arguments").toString(), Settings->value("OAuth").toString(), Quality->checkedAction()->text());
+        QMenu* LeftClickMenu = new QMenu(this);
+        OpenStreamAction* OpenTrueQualityStream = new OpenStreamAction(TrueQuality, LeftClickMenu);
+        OpenTrueQualityStream->setURL(URL);
+        connect(OpenTrueQualityStream, SIGNAL(onClick(QString)), this, SLOT(openStream(QString)));
+        LeftClickMenu->addAction("Choose Viewing Quality");
+        LeftClickMenu->addSeparator();
+        LeftClickMenu->addAction(OpenTrueQualityStream);
+        QMenu* LivestreamerQualities = new QMenu("Livestreamer Qualities", this);
+        OpenStreamAction* OpenBestStream = new OpenStreamAction("Best", LivestreamerQualities);
+        OpenBestStream->setURL(URL);
+        connect(OpenBestStream, SIGNAL(onClick(QString)), this, SLOT(openStream(QString)));
+        LivestreamerQualities->addAction(OpenBestStream);
+        LivestreamerQualities->addSeparator();
+        OpenStreamAction* OpenHighStream = new OpenStreamAction("High", LivestreamerQualities);
+        OpenBestStream->setURL(URL);
+        connect(OpenHighStream, SIGNAL(onClick(QString)), this, SLOT(openStream(QString)));
+        LivestreamerQualities->addAction(OpenHighStream);
+        OpenStreamAction* OpenMediumStream = new OpenStreamAction("Medium", LivestreamerQualities);
+        OpenBestStream->setURL(URL);
+        connect(OpenMediumStream, SIGNAL(onClick(QString)), this, SLOT(openStream(QString)));
+        LivestreamerQualities->addAction(OpenMediumStream);
+        OpenStreamAction* OpenLowStream = new OpenStreamAction("Low", LivestreamerQualities);
+        OpenBestStream->setURL(URL);
+        connect(OpenLowStream, SIGNAL(onClick(QString)), this, SLOT(openStream(QString)));
+        LivestreamerQualities->addAction(OpenLowStream);
+        OpenStreamAction* OpenMobileStream = new OpenStreamAction("Mobile", LivestreamerQualities);
+        OpenBestStream->setURL(URL);
+        connect(OpenMobileStream, SIGNAL(onClick(QString)), this, SLOT(openStream(QString)));
+        LivestreamerQualities->addAction(OpenMobileStream);
+        OpenStreamAction* OpenAudioStream = new OpenStreamAction("Audio", LivestreamerQualities);
+        OpenBestStream->setURL(URL);
+        connect(OpenAudioStream, SIGNAL(onClick(QString)), this, SLOT(openStream(QString)));
+        LivestreamerQualities->addAction(OpenAudioStream);
+        LivestreamerQualities->addSeparator();
+        OpenStreamAction* OpenWorstStream = new OpenStreamAction("Worst", LivestreamerQualities);
+        OpenBestStream->setURL(URL);
+        connect(OpenWorstStream, SIGNAL(onClick(QString)), this, SLOT(openStream(QString)));
+        LivestreamerQualities->addAction(OpenWorstStream);
+        LeftClickMenu->addMenu(LivestreamerQualities);
+        LeftClickMenu->popup(point);
 	}
 	else if(button == Qt::RightButton)
 	{
@@ -70,11 +108,11 @@ void Window::startStream(QPoint point, Qt::MouseButton button, QString Title, QS
 		RightClickMenu->addAction(Title);
 		RightClickMenu->addAction(Name + " playing " + Game + " @ " + QString::number(Viewers) + " viewers");
 		RightClickMenu->addSeparator();
-		SignalingAction *OpenChat = new SignalingAction("Open Chat", RightClickMenu);
+        OpenChatAction *OpenChat = new OpenChatAction("Open Chat", RightClickMenu);
 		OpenChat->setURL(URL);
 		connect(OpenChat, SIGNAL(onClick(QString)), this, SLOT(openChat(QString)));
 		RightClickMenu->addAction(OpenChat);
-		RightClickMenu->exec(point);
+        RightClickMenu->popup(point);
 	}
 }
 
@@ -98,30 +136,31 @@ void Window::on_actionLiveStreamerLog_triggered()
 
 void Window::on_actionLTF_Log_triggered()
 {
-
-	QUrl pathUrl = QUrl::fromLocalFile("LiveStreamerTwitchFollower.log");
+    QUrl pathUrl = QUrl::fromLocalFile("LiveStreamerQtFront.log");
 	QDesktopServices::openUrl(pathUrl);
 }
 
 void Window::on_Previous_onClick(const QString &URL)
 {
-	clear(ui->TwitchLayout);
 	populate(Settings->value("OAuth").toString(), ui->TwitchLayout, Manager, ui->Progress, ui->Navigation, Settings->value("Results").toInt(), this, URL);
 }
 
 void Window::on_Refresh_onClick(const QString &URL)
 {
-	clear(ui->TwitchLayout);
 	populate(Settings->value("OAuth").toString(), ui->TwitchLayout, Manager, ui->Progress, ui->Navigation, Settings->value("Results").toInt(), this, URL);
 }
 
 void Window::on_Next_onClick(const QString &URL)
 {
-	clear(ui->TwitchLayout);
 	populate(Settings->value("OAuth").toString(), ui->TwitchLayout, Manager, ui->Progress, ui->Navigation, Settings->value("Results").toInt(), this, URL);
 }
 
 void Window::openChat(QString URL)
 {
 	QDesktopServices::openUrl(QUrl(URL + "/chat"));
+}
+
+void Window::openStream(QString URL)
+{
+    runLivestreamer(URL, Settings->value("LiveStreamer_Path").toString(), Settings->value("Player_Path").toString(), Settings->value("Player_Arguments").toString(), Settings->value("OAuth").toString(), "best");
 }

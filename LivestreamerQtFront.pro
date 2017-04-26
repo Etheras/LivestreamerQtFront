@@ -24,13 +24,14 @@ HEADERS += \
 	Classes/channellabel.hpp \
 	Classes/channelpage.hpp \
 	Classes/navigationbutton.hpp \
-	Classes/signalingaction.hpp \
+        Classes/OpenStreamAction.hpp \
+        Classes/OpenChatAction.hpp \
 	GenericFunctions/genericfunctions.hpp \
 	GenericFunctions/populate.hpp \
 	GenericFunctions/clear.hpp \
 	GenericFunctions/checkconfiguration.hpp \
 	GenericFunctions/runlivestreamer.hpp \
-	GenericFunctions/initquality.hpp \
+        GenericFunctions/errorhandling.hpp \
 	GenericVariables/genericvariables.hpp \
 	GenericVariables/application.hpp \
 	GenericVariables/path.hpp \
@@ -38,7 +39,7 @@ HEADERS += \
 	GenericVariables/security.hpp \
 	GUI/window.hpp \
 	GUI/options.hpp \
-	GUI/about.hpp
+        GUI/about.hpp
 
 FORMS   += \
 	GUI/window.ui \

@@ -13,4 +13,3 @@ void clear(QGridLayout* Layout)
     delete child;
 }
 #endif
-

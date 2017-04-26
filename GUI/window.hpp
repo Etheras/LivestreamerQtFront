@@ -45,15 +45,16 @@ void on_Refresh_onClick(const QString &URL);
 
 void on_Next_onClick(const QString &URL);
 
-void startStream(QPoint point, Qt::MouseButton button, QString Title, QString URL, QString Name, QString Game, int viewers);
+void startStream(QPoint point, Qt::MouseButton button, QString Title, QString URL, QString Name, QString Game, int viewers, QString Quality);
 
 void openChat(QString URL);
+
+void openStream(QString URL);
 
 private:
 Ui::Window *ui;
 QSettings *Settings;
 NetworkManager *Manager;
-QActionGroup *Quality;
 };
 
 #endif

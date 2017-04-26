@@ -11,12 +11,12 @@ void populate(QString OAuth, QGridLayout *Twitch,  NetworkManager *MyNetManager,
     if(URL == "")
         URL = FollowRequestURL + "?limit=" + QString::number(Results);
     ChannelPage* Channels = MyNetManager->getJson(URL, OAuth, Progress);
-
+    clear(Twitch);
     QList<ChannelLabel*>* ChannelList = Channels->getChannels();
     int i=0,j=0;
     for(QList<ChannelLabel*>::const_iterator Channel = ChannelList->constBegin(); Channel != ChannelList->constEnd(); ++Channel)
     {
-        QObject::connect(*Channel, SIGNAL(onClick(QPoint, Qt::MouseButton, QString, QString, QString, QString, int)), Parent, SLOT(startStream(QPoint, Qt::MouseButton, QString, QString, QString, QString, int)));
+        QObject::connect(*Channel, SIGNAL(onClick(QPoint, Qt::MouseButton, QString, QString, QString, QString, int, QString)), Parent, SLOT(startStream(QPoint, Qt::MouseButton, QString, QString, QString, QString, int, QString)));
         Twitch->addWidget(*Channel, i++/5, j++%5);
     }
     Navigation->findChild<NavigationButton*>("Previous")->setURL(Channels->getPrevious());

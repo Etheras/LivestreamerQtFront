@@ -17,6 +17,7 @@
 #include <QEventLoop>
 #include <QTimer>
 #include <QProgressBar>
+#include <QFile>
 
 class Window;
 class ChannelPage;
@@ -38,7 +39,7 @@ QByteArray getAnything(QString URL, int timeout = 5, QString OAuth = "")
     QNetworkRequest* request = new QNetworkRequest(QUrl(URL));
     if(OAuth != "")
     {
-        request->setRawHeader("Accept", "application/vnd.twitchtv.v3+json");
+        request->setRawHeader("Accept", TwitchApiVersion.toUtf8());
         request->setRawHeader("Authorization", "OAuth " + OAuth.toUtf8());
     }
     QEventLoop loop;
@@ -61,12 +62,21 @@ ChannelPage* getJson(QString URL, QString OAuth, QProgressBar *Progress)
     Progress->show();
     QPixmap Image;
     QJsonDocument JsonD = QJsonDocument::fromJson(getAnything(URL, 10, OAuth));
+/*-----------Debug-------------
+    QFile DebugFile("Debug.txt");
+    if (DebugFile.open(QIODevice::WriteOnly))
+    {
+        QTextStream Eleos(&DebugFile);
+        Eleos << JsonD.toJson() << endl;
+    }
+*/
     if (JsonD.object()["_total"].toInt() < Progress->maximum()) Progress->setMaximum(JsonD.object()["_total"].toInt());
     QList<ChannelLabel*>* Channels = new QList<ChannelLabel*>();
     for(QJsonArray::const_iterator JsonStreams = JsonD.object()["streams"].toArray().constBegin(); JsonStreams != JsonD.object()["streams"].toArray().constEnd(); ++JsonStreams)
     {
         QJsonObject JsonChannel = (*JsonStreams).toObject();
         ChannelLabel* Channel = new ChannelLabel();
+        Channel->setQuality(QString::number(JsonChannel["video_height"].toInt()) + "p" + QString::number(JsonChannel["average_fps"].toInt()));
         Image = getIcon(JsonChannel["preview"].toObject()["large"].toString());
         if(Image.isNull())
             Image.load("404_preview.jpg");
